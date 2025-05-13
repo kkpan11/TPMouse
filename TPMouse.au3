@@ -1,9 +1,10 @@
 #NoTrayIcon
 #OnAutoItStartRegister SetProcessDPIAware
-#include 'singleton.au3'
 #include 'vkeys.au3'
 If IsAdmin() Then Sleep(100)
-_Singleton('TPMouse',0)
+
+DllCall("kernel32.dll", "handle", "CreateMutexW", "struct*", 0, "bool", 1, "wstr", "TPMouse")
+If 183 = DllCall("kernel32.dll", "dword", "GetLastError")[0] Then Exit
 
 Global $HOTKEY_STR_MAP
 
